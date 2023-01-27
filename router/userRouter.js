@@ -21,10 +21,11 @@ router.post("/user/add", async function (req, res) {
 
 router.get("/user/list", async function (req, res) {
     try {
-        // await auth.checkToken(req,res)
+        await auth.checkToken(req,res)
         let users = await User.find();
         res.status(200).json(users);
     } catch (error) {
+        console.log(error)
         return error;
     }
 });

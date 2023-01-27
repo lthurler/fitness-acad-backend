@@ -28,7 +28,7 @@ const auth = {
             throw new Error("Erro ao criar token!")
         }
     },
-    checkToken: async function(req,res,next) {
+    checkToken:  function(req,res,next) {
         try {
             const authHeader = req.headers.authorization;
             const token = authHeader.split(" ")[1];
@@ -37,13 +37,14 @@ const auth = {
             }
             const secret = process.env.SECRET_KEY
             jwt.verify(token, secret, (err, userInfo) => {
-                if(err || userInfo.perfil != 0) {
-                    return res.status(401).json({ error: "Usuário sem acesso!" });
+                if(err) {
+                    return res.status(401).json({ error: "JWT do usuario sem acesso!" });
                 }
                 return userInfo;
             })
+            
         }catch(e) {
-            return res.status(401).json({ error: "Usuário sem acesso!" + e });
+            return res.status(401).json({ error: "Usuário sem acesso, Catch check token!" });
         }
     }
 
