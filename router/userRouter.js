@@ -19,7 +19,7 @@ router.post("/user/add", async function (req, res) {
     }
 });
 
-router.get("/user/list", async function (req, res) {
+router.get("/usuario/list", async function (req, res) {
     try {
         // await auth.checkToken(req,res)
         let users = await User.find();

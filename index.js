@@ -12,10 +12,10 @@ conn()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-router.get("/", auth.checkToken, function (req,res) {
-    console.log("getadooo")
-    res.status(200).json({message:"get funfando"})
-})
+// router.get("/", auth.checkToken, function (req,res) {
+//     console.log("getadooo")
+//     res.status(200).json({message:"get funfando"})
+// })
 app.use(router)
 app.use(allRoutes)
 //Port
