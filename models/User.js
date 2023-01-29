@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-
-const User = mongoose.model("User", {
+const Schema = mongoose.Schema
+const UserSchema = new Schema({
     nome: String,
     foto: String,
     cpf: String,
@@ -12,6 +12,10 @@ const User = mongoose.model("User", {
     senha: String,
     telefone: String,
     data_nasc: String,
+    planilha: {
+        type: Schema.Types.ObjectId,
+        ref: "Planilha"
+    },
     perfil: {
         type:Number,
         default:1 //0 = admin, 1 = usuario
@@ -21,5 +25,5 @@ const User = mongoose.model("User", {
         default:true
     }
 });
-
+const User = mongoose.model("User", UserSchema)
 module.exports = User;

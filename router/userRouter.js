@@ -2,14 +2,12 @@ const router = require('express').Router();
 const User = require('../models/User');
 const auth = require("../service/auth")
 const userController = require("../controller/userController")
+const Exercicio = require("../models/Exercicios")
 
 router.post("/user/add", async function (req, res) {
     try {
-        // Receber e montar o usuário
         const user = userController.mountUser(req);
-        // Validar os dados;
         userController.validUser(user);
-        // Verifica se usuário já existe
         await userController.verifyUserExist(user.email);
         user.senha = await auth.createPass(user.senha)
         await User.create(user);
@@ -19,7 +17,7 @@ router.post("/user/add", async function (req, res) {
     }
 });
 
-router.get("/user/list", async function (req, res) {
+router.get("/user/list/", async function (req, res) {
     try {
         await auth.checkToken(req,res)
         let users = await User.find();
@@ -99,7 +97,25 @@ try {
     console.error(e.message)
     return res.status(500).json({error:"Erro no catch login"});
 }
-})
+});
+
+// router.post("/user/:id", async function (req,res) {
+    
+//         const exercicio = await Exercicio.create(req.body)
+//         .then((Exercicio) => {
+//             return User.findOneAndUpdate({ _id: req.params.id }, { exercicio: Exercicio._id }, { new: true });
+//         })
+//         .then((User) => {
+//             res.json(User)
+//         })
+//         .catch(err => { console.log(err)})
+  
+// })
+// router.get("/usuarioss/:id", async (req,res) => {
+//     const user = await User.findOne({ _id: req.params.id })
+//     .populate("exercicio")
+//     res.json(user)
+// })
 
 
 

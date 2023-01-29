@@ -28,7 +28,7 @@ const auth = {
             throw new Error("Erro ao criar token!")
         }
     },
-    checkToken:  function(req,res,next) {
+    checkToken:  function(req,res) {
         try {
             const authHeader = req.headers.authorization;
             const token = authHeader.split(" ")[1];
@@ -44,7 +44,7 @@ const auth = {
             })
             
         }catch(e) {
-            return res.status(401).json({ error: "Usuário sem acesso, Catch check token!" });
+            return res.status(401).json({ error: "Usuário sem acesso,   Check token!" });
         }
     }
 
