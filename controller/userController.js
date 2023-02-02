@@ -32,20 +32,17 @@ function validUser(user, update = false) {
     if (!update)
         if (!user.email) {
             error++;
-            //res.status(422).json({ message: "E-mail obrigatório!" });
-            //return
+            
         }
 
     if (!user.nome) {
         error++;
-        //res.status(422).json({ message: "Nome obrigatório!" });
-        //return;
+       
     }
 
     if (!user.senha) {
         error++;
-        //res.status(422).json({ message: "Senha obrigatório!" });
-        //return;
+       
     }
 
     if (error > 0) {
