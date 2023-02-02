@@ -20,10 +20,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 //Express Rotas
 
-router.get("/", auth.checkToken, function (req,res) {
-    console.log("Com acesso")
-    res.status(200).json({message:"Acesso OK!"})
-})
+// router.get("/", auth.checkToken, function (req,res) {
+//     console.log("Com acesso")
+//     res.status(200).json({message:"Acesso OK!"})
+// })
 app.use(router)
 app.use(allRoutes)
 

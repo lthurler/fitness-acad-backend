@@ -2,7 +2,10 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const ExercicioSchema = new Schema ({
-    nome: String,
+    nome: {
+        type:String,
+        unique:true
+        },
     grupomuscular: String,
     series: Number,
     repeticoes: Number

@@ -1,0 +1,9 @@
+criar exercicio, checar se exercicio existe, pushar pro db
+buscar exercico no db
+criar array com Exercicios, checando se tem repetiçoes
+criar Planilha
+jogar array de exercicios para planilha(com push, com populate(ref:), com ),
+checando se tem repeticoes
+
+
+

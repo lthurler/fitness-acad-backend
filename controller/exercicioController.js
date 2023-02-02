@@ -14,7 +14,8 @@ function mountExercicio(req) {
         repeticoes
     }
     return exercicio
-}
+};
+
 module.exports = {
     mountExercicio
 }
