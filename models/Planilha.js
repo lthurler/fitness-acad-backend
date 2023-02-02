@@ -3,31 +3,29 @@ const Schema = mongoose.Schema
 
 const PlanilhaSchema = new Schema(
     {
+        
+        nome_funcionario:String,
         serieA:{
-            nome:String,
-            type:Schema.Types.ObjectId,
-            required:true
+            type:[Schema.Types.ObjectId],
+            ref:"serieA"
         },
         serieB:{
-            nome:String,
-            type:Schema.Types.ObjectId,
+            type:Array,
         },
         serieC:{
-            nome:String,
-            type:Schema.Types.ObjectId,
+            type:Array
         },
         serieD:{
-            nome:String,
-            type:Schema.Types.ObjectId,
+            type:Array
         },
         serieE:{
-            nome:String,
-            type:Schema.Types.ObjectId,
+            type:Array
         },
         serieF:{
-            nome:String,
-            type:Schema.Types.ObjectId,
+            type:Array
         },
         
     }
 )
+const Planilha = mongoose.model("Planilha", PlanilhaSchema)
+module.exports = Planilha

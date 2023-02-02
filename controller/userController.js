@@ -9,7 +9,6 @@ function mountUser(req) {
         senha,
         telefone,
         data_nasc,
-        planilha
     } = req.body;
 
     const user = {
@@ -20,7 +19,6 @@ function mountUser(req) {
         senha,
         telefone,
         data_nasc,
-        planilha
     };
 
     return user;

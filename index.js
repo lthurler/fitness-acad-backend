@@ -4,7 +4,6 @@ const cors = require("cors")
 const app = express()
 const router = express.Router()
 const allRoutes = require("./router/router")
-const auth = require("./service/auth")
 const mongoose = require("mongoose");
 //DB
 mongoose.set("strictQuery", true)
@@ -20,10 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 //Express Rotas
 
-router.get("/", auth.checkToken, function (req,res) {
-    console.log("Com acesso")
-    res.status(200).json({message:"Acesso OK!"})
-})
+
 app.use(router)
 app.use(allRoutes)
 

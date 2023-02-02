@@ -1,11 +1,17 @@
+const Exercicio = require("../models/Exercicios");
 const Planilha = require("../models/Planilha")
 
 function mountPlanilha(req) {
     const {
-        type
+        nome_funcionario 
     } = req.body;
     
     const planilha = {
-        type
+        nome_funcionario
+        
     }
-}
+    return planilha
+};
+
+
+module.exports = { mountPlanilha }
