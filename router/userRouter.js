@@ -20,7 +20,7 @@ router.post("/user/add", async function (req, res) {
 router.get("/user/list/", async function (req, res) {
     try {
         await auth.checkToken(req,res)
-        let users = await User.find();
+        let users = await User.find().where('ative').equals(true);
         res.status(200).json(users);
     } catch (error) {
         console.log(error)
@@ -28,25 +28,22 @@ router.get("/user/list/", async function (req, res) {
     }
 });
 
-router.get("/usuario/:id", async function (req, res) {
+router.get("/user/:email", async function (req, res) {
     try {
-        let iduser = req.params.id;
-        let user = await User.findOne({ _id: iduser });
-        res.status(200).json(user);
+        let emailUser = req.params.email;
+        await auth.checkToken(req,res)
+        let user = await User.findOne({ email: emailUser }).where('ative').equals(true);
+        const mountedUser = { nome:user.nome, email:user.email, cpf:user.cpf, telefone:user.telefone,data_nasc:user.data_nasc}
+        res.status(200).json(mountedUser);
     } catch (error) {
         res.status(500).json({ error: "Erro ao buscar usuario!" });
     }
 });
 
-router.patch("/usuario/:id", async function (req, res) {
+router.patch("/user/update", async function (req, res) {
     try {
         // Receber e montar o usuário
-        let iduser = req.params.id;
-        const user = userController.mountUser(req);
-        // Validar os dados;
-        userController.validUser(user, true);
-       
-        const updateUser = await User.updateOne({ _id: iduser }, user);
+        const updateUser = await User.updateOne({ email: req.body.email }, {nome:req.body.nome,email:req.body.email, cpf:req.body.cpf,telefone:req.body.telefone,data_nasc:req.body.data_nasc});
 
         if (updateUser.matchedCount > 0) {
             res.status(200).json({ message: "Atualizado!" });
@@ -59,22 +56,16 @@ router.patch("/usuario/:id", async function (req, res) {
     }
 });
 
-router.delete("/usuario/:id", async function (req, res) {
+router.delete("/user/delete", async function (req, res) {
     try {
-        let iduser = req.params.id;
-        let user = await User.findOne({ _id: iduser });
-
+        let emailUser = req.body.email;
+        let user = await User.findOne({ email: emailUser }).where('ative').equals(true).exec();
         if (!user) {
-            throw new Error("Erro ao remover o usuario, usuario não encontrado!");
-        }
-
-        let deleteUser = await User.deleteOne({ _id: iduser });
-        if (deleteUser.deletedCount > 0) {
-            res.status(200).json({ message: "Removido!" });
-            return;
-        } else {
-            throw new Error("Erro ao remover o usuario!");
-        }
+                throw new Error("Erro ao remover o usuario, usuario não encontrado!");
+            }
+        await User.findOneAndUpdate({ email: emailUser},{ative:false});
+        res.status(200).json({ message: "Removido!" });
+      
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -92,7 +83,7 @@ try {
     }
     await auth.comparePass(senha, user.senha)
     const token = await auth.createToken(res, user)
-    return res.status(200).json({message:"Usuário Logado!", token:token,perfil:user.perfil})
+    return res.status(200).json({message:"Usuário Logado!", token:token,perfil:user.perfil,email:user.email})
 }catch(e) {
     console.error(e.message)
     return res.status(500).json({error:"Erro no catch login"});
